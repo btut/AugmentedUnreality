@@ -20,7 +20,7 @@ limitations under the License.
 UAURVideoSourceCamera::UAURVideoSourceCamera()
 	: CameraIndex(0)
 	, PreferredResolutionX(720)
-	, OfferedResolutions{FIntPoint(1920, 1080), FIntPoint(1280, 720), FIntPoint(640, 480), FIntPoint(480, 360)}
+	, OfferedResolutions{FIntPoint(3088, 2076)}
 {
 }
 
@@ -90,5 +90,16 @@ bool UAURVideoSourceCamera::Connect(FAURVideoConfiguration const& configuration)
 	}
 #endif
 
-	return Capture.isOpened();
+	if (!Capture.isOpened())
+	{
+		return false;
+	}
+	if (Capture.get(cv::CAP_PROP_FRAME_WIDTH) == configuration.Resolution.x && Capture.get(cv::CAP_PROP_FRAME_HEIGHT) == configuration.Resolution.y)
+	{
+		return true;
+	}
+	UE_LOG(LogAUR, Error, TEXT("Desired resoltuion unavalable for camera %i, trying %i\n"), CameraIndex, CameraIndex + 1);
+	Capture.release();
+	CameraIndex++;
+	return Connect(configuration);
 }
