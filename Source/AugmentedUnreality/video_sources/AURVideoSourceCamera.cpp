@@ -94,7 +94,7 @@ bool UAURVideoSourceCamera::Connect(FAURVideoConfiguration const& configuration)
 	{
 		return false;
 	}
-	if (Capture.get(cv::CAP_PROP_FRAME_WIDTH) == configuration.Resolution.x && Capture.get(cv::CAP_PROP_FRAME_HEIGHT) == configuration.Resolution.y)
+	if (Capture.get(cv::CAP_PROP_FRAME_WIDTH) == configuration.Resolution.X && Capture.get(cv::CAP_PROP_FRAME_HEIGHT) == configuration.Resolution.Y)
 	{
 		return true;
 	}
