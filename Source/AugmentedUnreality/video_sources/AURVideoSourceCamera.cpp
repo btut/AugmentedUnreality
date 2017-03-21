@@ -79,7 +79,15 @@ bool UAURVideoSourceCamera::Connect(FAURVideoConfiguration const& configuration)
 		}
 		else
 		{
-			UE_LOG(LogAUR, Error, TEXT("UAURVideoSourceCamera::Connect: Failed to open Camera %d"), CameraIndex)
+			Capture.release();
+			if (CameraIndex >= MAX_CAMERAS_TO_TRY)
+			{
+				UE_LOG(LogAUR, Error, TEXT("UAURVideoSourceCamera::Connect: Failed to open Camera %d, not trying any more Cameras"), CameraIndex);
+				return false;
+			}
+			UE_LOG(LogAUR, Error, TEXT("UAURVideoSourceCamera::Connect: Failed to open Camera %d, trying Camera %d"), CameraIndex, CameraIndex + 1);
+			CameraIndex++;
+			return Connect(configuration);
 		}
 #if !PLATFORM_ANDROID
 	}
@@ -98,8 +106,14 @@ bool UAURVideoSourceCamera::Connect(FAURVideoConfiguration const& configuration)
 	{
 		return true;
 	}
-	UE_LOG(LogAUR, Error, TEXT("Desired resoltuion unavalable for camera %i, trying %i\n"), CameraIndex, CameraIndex + 1);
+
 	Capture.release();
+	if (CameraIndex >= MAX_CAMERAS_TO_TRY)
+	{
+		UE_LOG(LogAUR, Error, TEXT("Desired resoltuion unavalable for camera %d, not trying any more Cameras\n"), CameraIndex);
+		return false;
+	}
+	UE_LOG(LogAUR, Error, TEXT("Desired resoltuion unavalable for camera %d, trying %d\n"), CameraIndex, CameraIndex + 1);
 	CameraIndex++;
 	return Connect(configuration);
 }

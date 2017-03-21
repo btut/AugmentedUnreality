@@ -18,6 +18,8 @@ limitations under the License.
 #include "AURVideoSourceCvCapture.h"
 #include "AURVideoSourceCamera.generated.h"
 
+#define MAX_CAMERAS_TO_TRY 10
+
 /**
  * Video stream from a camera.
  * Change the settings only before calling Connect
