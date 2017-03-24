@@ -228,13 +228,22 @@ public:
 	virtual bool IsNewFrameAvailable() const;
 
 	UFUNCTION(BlueprintCallable, Category = AugmentedReality)
-	EAURDiagnosticInfoLevel GetDiagnosticInfoLevel() const
+		EAURDiagnosticInfoLevel GetDiagnosticInfoLevel() const
 	{
 		return DiagnosticLevel;
 	}
 
 	UFUNCTION(BlueprintCallable, Category = AugmentedReality)
+		bool GetDriverActive() const
+	{
+		return bActive;
+	}
+
+	UFUNCTION(BlueprintCallable, Category = AugmentedReality)
 	virtual void SetDiagnosticInfoLevel(EAURDiagnosticInfoLevel NewLevel);
+
+	UFUNCTION(BlueprintCallable, Category = AugmentedReality)
+	virtual void SetDriverActive(bool newActive);
 
 	UFUNCTION(BlueprintCallable, Category = AugmentedReality)
 	void ToggleDiagnosticInfoLevel();

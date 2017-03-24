@@ -257,6 +257,11 @@ void UAURDriver::SetDiagnosticInfoLevel(EAURDiagnosticInfoLevel NewLevel)
 	DiagnosticLevel = NewLevel;
 }
 
+void UAURDriver::SetDriverActive(bool newActive)
+{
+	bActive = newActive;
+}
+
 void UAURDriver::ToggleDiagnosticInfoLevel()
 {
 	const uint8 next = ((uint8)GetDiagnosticInfoLevel() + 1) % ((uint8)EAURDiagnosticInfoLevel::AURD_Advanced + 1);
