@@ -148,7 +148,11 @@ public class AugmentedUnreality : ModuleRules
 			PublicDelayLoadDLLs.AddRange(
 				OpenCVModules.ConvertAll(m => Path.Combine(BinariesDirForTarget(Target), m + suffix + ".dll"))
 			);
-		}
+
+            modules.ForEach(delegate (String module){
+                RuntimeDependencies.Add(new RuntimeDependency(Path.Combine(BinariesDir, "Win64", module+"320.dll")));
+            });
+        }
 		else if (Target.Platform == UnrealTargetPlatform.Linux )
 		{
 			Console.WriteLine("AUR: OpenCV for Linux");
