@@ -30,7 +30,7 @@ FOpenCVCameraProperties::FOpenCVCameraProperties()
 	// Default camera matrix:
 	// f = 2200
 	// res = 1920x1080
-	SetFromResolutionAndFocal(FIntPoint(1920, 1080), 2200);
+	SetFromResolutionAndFocal(FIntPoint(3088, 2076), 1295.569830);
 }
 
 void FOpenCVCameraProperties::SetFromResolutionAndFocal(FIntPoint const & resolution, double focal_pixels)
